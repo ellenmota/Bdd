@@ -1,37 +1,39 @@
 from selenium import webdriver
 from behave import step
 
-dicionario = {"pesquisar": "btnG"}
 driver = None
-id_s = None
+id_d = None
 
-@step('que o  navegador esteja aberto')
-def abrir_navegador(context):
+dicionario = {
+"pesquisa":"s",
+"buscar":"submit"
+}
+@step('que o navegador esteja aberto')
+def testar_navegador(context):
     global driver
     driver = webdriver.Firefox()
 
-@step('acesso "{site}"')
-def teste_site(context,site):
-    driver.get(site)
+@step('encontrar o site "{endereco}"')
+def entrada_endereco(context,endereco):
+    driver.get(endereco)
 
-@step('localizar campo de busca "{campo}"')
-def campo_busca(context,campo):
-    global id_s
-    id_s = driver.find_element_by_id(campo)
+@step('encontrar o campo de pesquisa "{pesquisa}"')
+def testar_campo(context,pesquisa):
+    global id_d
+    id_d = driver.find_element_by_name(dicionario["pesquisa"])
 
-@step('escrever "{texto}"')
-def text(context,texto):
-    id_s.send_keys(texto)
+@step('digitar "{texto}"')
+def testar_digitacao(context,texto):
+    id_d.send_keys(texto)
 
-@step('clicar no botao "{pesquisar}"')
-def teste_pesquisar(context,pesquisar):
-    driver.find_element_by_name(dicionario["pesquisar"]).click()
+@step('clicar no botao "{buscar}"')
+def testar_botao(context,buscar):
+    id_d = driver.find_element_by_name(dicionario["buscar"]).click()
 
-@step('encontrar o titulo "{texto}"')
-def palavra(context,texto):
+@step('deve encontrar a palavra "{texto}"')
+def achar_palavra(context,texto):
     assert texto in driver.title
 
 @step('fechar o navegador')
-def fechar_navegador(context):
-    driver.save_screenshot("browser.png")
+def fechar_nav(context):
     driver.close()

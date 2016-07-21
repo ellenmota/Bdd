@@ -1,10 +1,11 @@
 Feature: teste automatizado
 
-Scenario: buscar Gas Tecnologia
-        Given que o  navegador esteja aberto
-        And acesso "https://www.google.com.br/"
-        When localizar campo de busca "lst-ib"
-        And escrever "Gas Tecnologia"
-        And clicar no botao "pesquisar"
-        And encontrar o titulo "Google"
-        Then fechar o navegador
+
+Scenario: pesquisar "Cartão" no site
+        Given que o navegador esteja aberto
+        And encontrar o site "http://ellenmotatutoriais.com/"
+        When encontrar o campo de pesquisa "pesquisa"
+        And digitar "cartao"
+        And clicar no botao "buscar"
+        Then deve encontrar a palavra "cartao"
+        And fechar o navegador
